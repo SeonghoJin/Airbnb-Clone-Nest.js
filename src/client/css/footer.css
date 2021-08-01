@@ -1,0 +1,48 @@
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    margin-left: -12px;
+    margin-right: -12px;
+}
+
+.util-list-box {
+    padding-left: 12px;
+    padding-right: 12px;
+}
+
+.util-list-title {
+    margin: 0px;
+    font-size: 12px;
+}
+
+.util-list {
+    margin: 0px;
+    padding: 0px;
+    list-style: none;
+}
+
+.util-list-item {
+    margin-top: 20px;
+}
+
+.footer-nav {
+    display: flex;
+    justify-content: space-between;
+    border-top: 1px solid #DDDDDD;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.icons {
+    display: flex;
+}
+
+.footer-nav-letter {
+    text-decoration: underline;
+    font-weight: 600;
+    margin-right: 24px;
+}
+
+.icons *:not(:last-child) {
+    margin-right: 24px;
+}
