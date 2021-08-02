@@ -1,27 +1,20 @@
-import Component from "../../../core/Component";
-import {
-    vaildSignUp,
-    requestSignUp
-} from "./SignUpController.js"
-import "../modal.css"
+import Component from '../../../core/Component';
+import { vaildSignUp, requestSignUp } from './SignUpController.js';
+import '../modal.css';
 export default class SignUp extends Component {
+  setup() {
+    this.state = {
+      id_value: '',
+      password_value: '',
+      repassword_value: '',
+      errorflag: true,
+    };
+  }
 
-    setup() {
-        this.state = {
-            id_value: "",
-            password_value: "",
-            repassword_value: "",
-            errorflag: true
-        }
-    }
+  template() {
+    const { errorflag } = this.state;
 
-    template() {
-
-        const {
-            errorflag
-        } = this.state;
-
-        return `
+    return `
         <div class="modal_container">
         </div>
         <div class="modal_content">
@@ -59,7 +52,7 @@ export default class SignUp extends Component {
                         <input class="input_email" placeholder="비밀번호확인">
                     </label>
                 </div>
-                <span class="error ${errorflag ? "hidden" : "flex"}" >
+                <span class="error ${errorflag ? 'hidden' : 'flex'}" >
                 <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" aria-label="오류 표시기" role="img" focusable="false" style="display: block; fill: none; height: 16px; width: 16px; stroke: currentcolor; stroke-width: 2; overflow: visible;"><circle cx="16" cy="16" r="14" fill="none"></circle><path d="m16 8v10" fill="none"></path><circle cx="16" cy="22.5" fill="#000" r=".5"></circle></svg>
                     <span style="margin-left:5px">잘못된 정보입니다. 다시 입력해주세요.</span>
                 </span>
@@ -68,54 +61,44 @@ export default class SignUp extends Component {
                 </button>
             </div>
         </div>        
-        `
-    }
+        `;
+  }
 
-    setEvent() {
-        const {
-            toggleEnableSignUpModal
-        } = this.props;
-        this.addEvent('click', '.remove_modal', toggleEnableSignUpModal);
-        this.addEvent('click', '.modal_container', toggleEnableSignUpModal);
-        this.addEvent('click', '.remove_modal', () => {
-            this.setState({
-                errorflag: true
-            })
+  setEvent() {
+    const { toggleEnableSignUpModal } = this.props;
+    this.addEvent('click', '.remove_modal', toggleEnableSignUpModal);
+    this.addEvent('click', '.modal_container', toggleEnableSignUpModal);
+    this.addEvent('click', '.remove_modal', () => {
+      this.setState({
+        errorflag: true,
+      });
+    });
+    this.addEvent('click', '.modal_container', () => {
+      this.setState({
+        errorflag: true,
+      });
+    });
+    this.addEvent('keyup', '#id', (e) => {
+      this.state.id_value = e.target.value;
+    });
+    this.addEvent('keyup', '#password', (e) => {
+      this.state.password_value = e.target.value;
+    });
+    this.addEvent('keyup', '#repassword', (e) => {
+      this.state.repassword_value = e.target.value;
+    });
+
+    this.addEvent('click', '.signup_button', (e) => {
+      const { id_value, password_value, repassword_value } = this.state;
+      if (vaildSignUp(id_value, password_value, repassword_value) === false) {
+        this.setState({
+          errorflag: false,
         });
-        this.addEvent('click', '.modal_container', () => {
-            this.setState({
-                errorflag: true
-            })
-        });
-        this.addEvent('keyup', '#id', (e) => {
-            this.state.id_value = e.target.value;
-        })
-        this.addEvent('keyup', '#password', (e) => {
-            this.state.password_value = e.target.value;
-        })
-        this.addEvent('keyup', '#repassword', (e) => {
-            this.state.repassword_value = e.target.value;
-        })
-
-        this.addEvent('click', '.signup_button', (e) => {
-            const {
-                id_value,
-                password_value,
-                repassword_value
-            } = this.state;
-            if (vaildSignUp(id_value, password_value, repassword_value) === false) {
-                this.setState({
-                    errorflag: false
-                })
-                return;
-            } else {
-                toggleEnableSignUpModal();
-                requestSignUp(id_value, password_value, repassword_value);
-            }
-        })
-
-    }
-
-
-
+        return;
+      } else {
+        toggleEnableSignUpModal();
+        requestSignUp(id_value, password_value, repassword_value);
+      }
+    });
+  }
 }
