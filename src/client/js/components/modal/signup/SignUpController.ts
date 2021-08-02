@@ -20,25 +20,29 @@ export const vaildSignUp = (
   return vaildId(id) && vaildPassword(password, repassword);
 };
 
-export const requestSignUp = (
+export const requestSignUp = async (
   id: string,
   password: string,
   repassword: string,
 ) => {
-  axios({
-    method: 'post',
-    url: SERVER_PRE + '/auth/sign-up',
-    data: {
-      id: id,
-      password: password,
-      repassword: repassword,
-    },
-  });
-};
-
-export const requestSignIn = (id: string, password: string) => {
-  axios.post(SERVER_PRE + `/auth/sign-in`, {
+  const response = await axios.post(SERVER_PRE + '/auth/sign-up', {
     id: id,
     password: password,
   });
+
+  return response.data;
+};
+
+export const requestSignIn = async (id: string, password: string) => {
+  const response = await axios.post(SERVER_PRE + `/auth/sign-in`, {
+    id: id,
+    password: password,
+  });
+
+  return response.data;
+};
+
+export const requestLogout = async (id: string) => {
+  const response = await axios.delete(SERVER_PRE + `/auth/logout/${id}`);
+  return response.data;
 };

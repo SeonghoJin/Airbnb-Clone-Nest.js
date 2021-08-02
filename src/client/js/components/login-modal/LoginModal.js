@@ -68,10 +68,15 @@ export default class LoginModal extends Component {
     this.addEvent('keydown', '#password', (e) => {
       this.state.password_value = e.target.value;
     });
-    this.addEvent('click', '#loginModal', (e) => {
+    this.addEvent('click', '#loginModal', async (e) => {
       const { id_value, password_value } = this.state;
       toggleEnableLoginModal();
-      requestSignIn(id_value, password_value);
+      const data = await requestSignIn(id_value, password_value);
+      if (data != null && data != '') {
+        localStorage.setItem('login', JSON.stringify(data));
+      } else {
+        localStorage.setItem('login', null);
+      }
     });
   }
 }

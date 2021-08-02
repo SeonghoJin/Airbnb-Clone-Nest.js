@@ -1,6 +1,7 @@
 import Component from '../../../core/Component';
 import { vaildSignUp, requestSignUp } from './SignUpController.js';
 import '../modal.css';
+
 export default class SignUp extends Component {
   setup() {
     this.state = {
